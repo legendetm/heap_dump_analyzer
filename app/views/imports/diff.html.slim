@@ -1,0 +1,32 @@
+- content_for(:navbar)
+  = link_to('Back', import_path(@import), class: 'btn btn-sm btn-primary')
+
+.card
+  .card-header
+    h2 Heap dump diff
+
+  .card-block
+    h3 Included heap dumps
+  table.table.table-bordered.table-striped
+    tr
+      th = HeapDump.human_attribute_name('time')
+    - @heap_dumps.each do |heap_dump|
+      tr
+        td = heap_dump.time
+
+  .card-block
+    h3 Diff
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = SpaceObject.human_attribute_name(:total)
+      th = SpaceObject.human_attribute_name(:type)
+      th = SpaceObject.human_attribute_name(:bytesize)
+      th = SpaceObject.human_attribute_name(:memsize)
+      th = SpaceObject.human_attribute_name(:location)
+    - @space_objects.each do |space_object|
+      tr
+        td = space_object.total
+        td = space_object.type
+        td = space_object.bytesize
+        td = space_object.memsize
+        td = space_object.alloc_info

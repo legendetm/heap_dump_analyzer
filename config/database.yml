@@ -1,0 +1,14 @@
+default: &default
+  adapter: postgresql
+  username: heap_dump_analyzer
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: heap_dump_analyzer_development
+
+test:
+  <<: *default
+  database: heap_dump_analyzer_test
+

@@ -1,0 +1,19 @@
+- content_for(:navbar)
+  = link_to('Back', import_path(@heap_dump.import_id), class: 'btn btn-sm btn-primary')
+
+.card
+  .card-header
+    h2 Heap dump
+  table.table.table-bordered.table-striped
+    tr
+      th = HeapDump.human_attribute_name(:generation)
+      th = HeapDump.human_attribute_name(:total)
+      th = HeapDump.human_attribute_name(:bytesize)
+      th = HeapDump.human_attribute_name(:memsize)
+    - @space_objects.each do |object|
+      tr
+        td = link_to(object.generation.to_s,
+                generation_heap_dump_path(@heap_dump, gen: object.generation))
+        td = object.total
+        td = object.bytesize
+        td = "#{object.memsize} (#{number_to_human_size(object.memsize)})"

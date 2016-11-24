@@ -1,0 +1,32 @@
+.card
+  .card-header
+    h2 Import heap dumps
+  table.table.table-bordered.table-striped
+    tr
+      th = HeapDump.human_attribute_name('time')
+    - @heap_dumps.each do |heap_dump|
+      tr
+        td = link_to(l(heap_dump.time), heap_dump_path(heap_dump))
+
+  .card-block
+    h2 Generate diffs
+    p.text-warning Minimum 2 heap dumps must be selected.
+    p Lists all objects which are not in the earliest heap dump and exists in all other heap dumps.
+    = form_tag(diff_import_path(@import), method: :get) do
+      = collection_check_boxes(nil, :ids, @heap_dumps, :id, :time, multiple: true) do |b|
+        .form-check
+          = b.label(class: 'form-check-label') do
+            => b.check_box(class: 'form-check-input')
+            = b.text
+      = submit_tag(nil)
+
+  .card-block
+    h2 Graphs
+    .row
+      - @import.graphs.each do |graph|
+        .col-xs-6
+          .card
+            .card-header
+              h4 = graph.file.filename.humanize
+            .card-block
+              = image_tag(graph.url, class: 'col-xs-12')

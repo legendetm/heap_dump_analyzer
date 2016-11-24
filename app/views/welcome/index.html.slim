@@ -1,0 +1,18 @@
+div.jumbotron-fluid
+  h1 Quick start
+  p
+    | Move all ruby heap dump files into one folder (e.g. <i>data</i>) and run
+    code time rake import:dir DIR=data
+    | from command line to import these!
+
+.card
+  .card-header
+    h2 Recent imports
+  table.table.table-bordered.table-striped
+    tr
+      th = Import.human_attribute_name('id')
+      th = Import.human_attribute_name('created_at')
+    - @imports.each do |import|
+      tr
+        td = link_to(import.id, import_path(import))
+        td = l(import.created_at)

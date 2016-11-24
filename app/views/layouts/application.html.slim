@@ -1,0 +1,27 @@
+doctype html
+html(lang=I18n.locale)
+  head
+    title Heap dump analyzer
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="x-ua-compatible" content="ie=edge")
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  body
+    nav.navbar.navbar-light.bg-faded.navbar-fixed-top(role="navigation")
+      div.container-fluid
+        = link_to 'Heap dump analyzer', root_path
+        .float-sm-right
+          = yield(:navbar)
+    section.alerts
+      - flash.each do |type, message|
+        div.alert.alert-dismissible.fade.in(role="alert" class="alert-#{bootstrap_flash_type(type)}")
+          button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+          = message
+    main#main.container-fluid
+      .row
+        .col-xs-12
+          == yield
+    footer

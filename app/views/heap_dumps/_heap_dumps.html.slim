@@ -1,0 +1,14 @@
+table.table.table-bordered.table-striped
+  tr
+    th = HeapDump.human_attribute_name(:type)
+    th = HeapDump.human_attribute_name(:value)
+    th = HeapDump.human_attribute_name(:memsize)
+    th = HeapDump.human_attribute_name(:generation)
+    th = HeapDump.human_attribute_name(:location)
+  - space_objects.each do |space_object|
+    tr
+      td = space_object.type
+      td = truncate(space_object.value)
+      td = space_object.memsize
+      td = space_object.generation
+      td(title=space_object.alloc_info) = space_object.alloc_info(30)

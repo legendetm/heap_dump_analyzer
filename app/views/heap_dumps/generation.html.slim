@@ -1,0 +1,65 @@
+- content_for(:navbar)
+  = link_to('Back', heap_dump_path(@heap_dump), class: 'btn btn-sm btn-primary')
+
+.card
+  .card-header
+    h2 Heap dump generation #{@generation}
+
+  .card-block
+    h3 Allocated memory
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = HeapDump.human_attribute_name(:memsize)
+      th = HeapDump.human_attribute_name(:location)
+    - @allocations.each do |object|
+      tr
+        td = number_to_human_size(object.memsize)
+        td = object.alloc_info
+
+  .card-block
+    h3 Object counts
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = HeapDump.human_attribute_name(:total)
+      th = HeapDump.human_attribute_name(:location)
+    - @object_counts.each do |object|
+      tr
+        td = object.total
+        td = object.alloc_info
+
+  .card-block
+    h3 Type counts
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = HeapDump.human_attribute_name(:total)
+      th = HeapDump.human_attribute_name(:type)
+      th = HeapDump.human_attribute_name(:location)
+    - @type_counts.each do |object|
+      tr
+        td = object.total
+        td = object.type
+        td = object.alloc_info
+
+  .card-block
+    h3 High reference counts
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = HeapDump.human_attribute_name(:total)
+      th = HeapDump.human_attribute_name(:location)
+    - @ref_counts.each do |object|
+      tr
+        td = object.total
+        td = object.alloc_info
+
+  .card-block
+    h3 Duplicate strings
+  table.table.table-bordered.table-striped.table-sm
+    tr
+      th = HeapDump.human_attribute_name(:total)
+      th = HeapDump.human_attribute_name(:value)
+      th = HeapDump.human_attribute_name(:location)
+    - @duplicate_string.each do |object|
+      tr
+        td = object.total
+        td = object.value.inspect
+        td = object.alloc_info
